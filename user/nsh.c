@@ -85,6 +85,7 @@ void execPipe(char*argv[],int argc){
     pipe(fd);
     if(fork() == 0){
         // 执行左边的命令 把自己的标准输出关闭
+        // 把写入端复制到标准输出
         close(1);
         dup(fd[1]);
         close(fd[0]);
@@ -92,6 +93,7 @@ void execPipe(char*argv[],int argc){
         runcmd(argv,i);
     }else{
         // 执行右边的命令 把自己的标准输入关闭
+        // 把读取端复制到标准输入
         close(0);
         dup(fd[0]);
         close(fd[0]);

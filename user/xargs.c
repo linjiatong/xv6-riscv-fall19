@@ -2,7 +2,10 @@
 #include "/home/180110123/xv6-riscv-fall19/kernel/param.h"
 #include "user.h"
 
-
+//  实现函数xargs
+//  从标准输入中读取行并为每行运行一个命令
+//  将该行作为命令的参数提供
+//  实际上是把标准输入转化为后面命令的命令行参数
 int main(int argc, char *argv[])
 {
     if(argc < 2) {
@@ -10,7 +13,7 @@ int main(int argc, char *argv[])
         exit();
     }
 
-    char buf_argv[MAXARG][MAXARG]; 
+    char buf_argv[MAXARG][MAXARG];      // 指向argv，从argv[1]开始
     char buf;   // 读文件0
     char *p[MAXARG];
     int i,j;

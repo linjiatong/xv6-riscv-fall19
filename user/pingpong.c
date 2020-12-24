@@ -1,10 +1,14 @@
 #include "user.h"
 
 
+/*
+    父进程将“ping”写入parent_pipe，发送给子进程
+    子进程接受后，将“pong”写入child_pipe，发送给父进程
+*/
 int main(int argc, char const *argv[])
 {
-    int fd[2];
-    int fd_second[2];
+    int fd[2];      // f[1]写入端，f[0]:读出端 ， parent_pipe
+    int fd_second[2];   // chile_pipe
     int k = pipe(fd);
     if(k < 0) {
         exit();

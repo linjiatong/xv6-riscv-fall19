@@ -3,12 +3,13 @@
 #include "/home/180110123/xv6-riscv-fall19/kernel/stat.h"
 #include "/home/180110123/xv6-riscv-fall19/kernel/fs.h"
 
+// 递归找到子目录
 void find(char *path, char *re) 
 {
   char buf[512], *p;
   int fd;
   struct dirent de;   // 为获取文件目录内容
-  struct stat st;
+  struct stat st;     // 获取文件属性
 
   // open the dir
   if((fd = open(path, 0)) < 0){
@@ -27,7 +28,7 @@ void find(char *path, char *re)
     strcpy(buf, path);
     p = buf + strlen(buf);
     *p++ = '/';
-    if(de.inum == 0) {
+    if(de.inum == 0) {    // 表示该dirent是无效的
         continue;
     }
     // 将de中文件名赋值到buf，进行递归

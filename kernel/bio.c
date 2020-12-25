@@ -170,11 +170,11 @@ brelse(struct buf *b)
 
     // 类似bget not cached
     b->next->prev = b->prev;
-    b->prev->next = b->next;
+    b->prev->next = b->next;    // 将b从链表中断开
     b->next = bcache.hashbucket[number].next;
     b->prev = &bcache.hashbucket[number];
     bcache.hashbucket[number].next->prev = b;
-    bcache.hashbucket[number].next = b;
+    bcache.hashbucket[number].next = b;   // buf[0]->head->b->buf[n]
   }
   
   release(&bcache.lock[number]);

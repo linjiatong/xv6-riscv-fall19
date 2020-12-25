@@ -25,22 +25,24 @@ struct kmem{
 
 struct kmem kmems[NCPU];
 
+// 初始化分配器
 void
 kinit()
 {
   for(int i = 0;i < NCPU ; i++) {
     initlock(&kmems[i].lock, "kmem");
   }
-  freerange(end, (void*)PHYSTOP);
+  freerange(end, (void*)PHYSTOP);   // 把空闲内存加到链表中
 }
 
+// 把每个空闲页逐一加到链表中
 void
 freerange(void *pa_start, void *pa_end)
 {
   char *p;
-  p = (char*)PGROUNDUP((uint64)pa_start);
+  p = (char*)PGROUNDUP((uint64)pa_start);   // 确保空闲内存是4K对齐的
   for(; p + PGSIZE <= (char*)pa_end; p += PGSIZE)
-    kfree(p);
+    kfree(p);   // 调用函数将页面从头部插入到链表kmem.freelist
 }
 
 // 获得当前cpuid

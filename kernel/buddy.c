@@ -215,7 +215,7 @@ bd_free(void *p) {
 
 // Compute the first block at size k that doesn't contain p
 int
-blk_index_next(int k, char *p) {
+ blk_index_next(int k, char *p) {
   int n = (p - (char *) bd_base) / BLK_SIZE(k);
   if((p - (char*) bd_base) % BLK_SIZE(k) != 0)
       n++;
